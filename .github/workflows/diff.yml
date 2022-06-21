@@ -1,0 +1,18 @@
+name: Diff
+on:
+  push:
+    branches: ["**"]
+    tags-ignore: ["**"]
+
+jobs:
+  diff:
+    name: Diff
+    runs-on: ubuntu-latest
+    steps:
+    - name: diff
+      id: diff
+      run: |
+        (echo "hello world";echo) > one
+        (echo "Hello world";echo) > two
+        (diff -u one two || true)
+        (diff -u one two | perl -pe 's/$/!/' || true)
